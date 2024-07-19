@@ -2,6 +2,9 @@
 
 Open-source, end user, privacy focused printing app(s) for [Niimbot](https://www.niimbot.net) label printers.
 
+### Where to download?
+[TestFlight for macOS/iPad/iPhone](https://testflight.apple.com/join/UDG3UREI)
+
 It all started when I bought a D110 just to discover the appstore apps (iOS and Android) got in-app purchase built-into them which already got me wondering.
 Then when trying to install it an old Android phone with custom rom, it complained it is rooted and didn't agree to run...
 
@@ -19,9 +22,12 @@ Based on the APIs shown by those projects I've did some Swift port bundled in a 
 ## Apps
 
 Currently there is a Catalyst/SwiftUI app that can run on iOS, iPadOS and macOS.
+[Apple Downloads on TestFlight](https://testflight.apple.com/join/UDG3UREI)
 
 I didn't test it on anything but the D110 I have.
 So feedback and PRs are appreciated.
+
+Once it feels mature enough, I'll try to publish it on the AppStore.
 
 ![Label Editor View](images/libreniim_label.png)
 ![Scan View](images/libreniim_scanning.png)
