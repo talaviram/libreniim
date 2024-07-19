@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "asyncbluetooth",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/manolofdez/AsyncBluetooth",
+      "state" : {
+        "revision" : "2bb6c48e886b4cb2bdf82074352ed60fe0515b35",
+        "version" : "1.11.0"
+      }
+    }
+  ],
+  "version" : 2
+}
