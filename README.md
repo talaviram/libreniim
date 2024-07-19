@@ -24,6 +24,11 @@ Based on the APIs shown by those projects I've did some Swift port bundled in a 
 Currently there is a Catalyst/SwiftUI app that can run on iOS, iPadOS and macOS.
 [Apple Downloads on TestFlight](https://testflight.apple.com/join/UDG3UREI)
 
+### Requirements:
+- Intel or Apple silicon, macOS 12.1, Monterey or greater.
+- iOS 15.2 or greater
+- Bluetooth (no Printer USB connectivity)
+
 I didn't test it on anything but the D110 I have.
 So feedback and PRs are appreciated.
 
