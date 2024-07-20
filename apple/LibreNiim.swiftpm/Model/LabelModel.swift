@@ -32,6 +32,7 @@ class LabelModel: ObservableObject {
   func makeImage() -> UIImage? {
     let frame = CGRect(x: 0, y: 0, width: getWidthInPx(), height: getHeightInPx())
     let nameLabel = UILabel(frame: frame)
+    nameLabel.numberOfLines = 3
     nameLabel.textAlignment = .center
     nameLabel.backgroundColor = .white
     nameLabel.textColor = .black
