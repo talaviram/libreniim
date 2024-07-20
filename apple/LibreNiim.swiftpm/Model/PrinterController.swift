@@ -17,6 +17,12 @@ class PrinterController: ObservableObject {
     return printer?.isPrinting ?? false
   }
 
+  init() {
+    #if !DEBUG
+      AsyncBluetoothLogging.isEnabled = false
+    #endif
+  }
+
   func connectionState() -> String {
     return printer?.peripheral.cbPeripheral.description() ?? "Unknown"
   }
