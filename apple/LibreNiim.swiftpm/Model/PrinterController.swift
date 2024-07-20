@@ -110,9 +110,9 @@ class PrinterController: ObservableObject {
           self.objectWillChange.send()
         }
       }
-      DispatchQueue.main.asyncAfter(deadline: .now() + timeToPollInSeconds) {
-        self.pollHeartbeat()
-      }
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + timeToPollInSeconds) {
+      self.pollHeartbeat()
     }
   }
 
