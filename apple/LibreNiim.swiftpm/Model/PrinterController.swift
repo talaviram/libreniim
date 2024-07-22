@@ -80,9 +80,9 @@ class PrinterController: ObservableObject {
   }
 
   public private(set) var printer: NiimbotPeripheral?
-  @Published var deviceInfo: NiimbotPeripheral.DeviceInfo?
-  @Published var paperRfidState: NiimbotPeripheral.RFIDPaperRollState?
-  @Published var deviceStatus: NiimbotPeripheral.DeviceStatus?
+  var deviceInfo: NiimbotPeripheral.DeviceInfo?
+  var paperRfidState: NiimbotPeripheral.RFIDPaperRollState?
+  var deviceStatus: NiimbotPeripheral.DeviceStatus?
 
   private var serialQueue = SerialQueue()
   private var btNotifications: Set<AnyCancellable> = []
