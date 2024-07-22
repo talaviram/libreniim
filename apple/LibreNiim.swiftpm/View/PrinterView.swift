@@ -39,9 +39,9 @@ struct PrinterView: View {
               }
             }
           ).disabled(!model.isConnected)
-          .frame(width: 120, height: 40)
-          .foregroundStyle(.white)
-          .background(.blue, in: RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+            .frame(width: 120, height: 40)
+            .foregroundStyle(.white)
+            .background(.blue, in: RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
         }
         Spacer()
         HStack {
