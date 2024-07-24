@@ -15,9 +15,14 @@ struct PrintJobStatusView: View {
 
   var body: some View {
     VStack {
-      Text("Printing... \(job.page)/\(quantity)").foregroundStyle(.blue)
-      ProgressView(value: calcProgress())
+      Text("Printing... \(job.page)/\(quantity)").foregroundStyle(.white)
+      ProgressView(value: calcProgress()).tint(.white)
+      ProgressView().tint(.white)
     }
+    .padding()
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(
+      .secondary.opacity(0.8), in: RoundedRectangle(cornerSize: CGSize(width: 20, height: 10)))
   }
 }
 
