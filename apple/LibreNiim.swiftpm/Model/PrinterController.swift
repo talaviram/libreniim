@@ -137,10 +137,13 @@ class PrinterController: ObservableObject {
   }
 
   func setCurrentPeripheral(peripheral: NiimbotPeripheral?) {
+    guard let validPrinter = peripheral else {
+      return
+    }
     if printer != nil {
       safelyRemovePeripheral()
     }
-    printer = peripheral
+    printer = validPrinter
     serialQueue = SerialQueue()
     _ = serialQueue.addJob {
       guard let info = await self.printer?.getDeviceInfo() else { return }
