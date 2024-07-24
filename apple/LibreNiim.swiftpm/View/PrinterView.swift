@@ -38,10 +38,11 @@ struct PrinterView: View {
                 model.tryPrint(image, verticalPrint: labelModel.isInverted)
               }
             }
-          ).disabled(!model.isConnected)
-            .frame(width: 120, height: 40)
-            .foregroundStyle(.white)
-            .background(.blue, in: RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+          )
+          .buttonStyle(.borderedProminent)
+          .tint(.blue)
+          .disabled(model.isPrinting || !model.isConnected)
+          .frame(width: 120, height: 40)
         }
         Spacer()
         HStack {
