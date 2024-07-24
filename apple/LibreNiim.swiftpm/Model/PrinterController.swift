@@ -17,6 +17,10 @@ class PrinterController: ObservableObject {
     return printer?.state.isPrinting ?? false
   }
 
+  var error: String? {
+    return printer?.state.error
+  }
+
   init() {
     #if !DEBUG
       AsyncBluetoothLogging.isEnabled = false
@@ -79,7 +83,7 @@ class PrinterController: ObservableObject {
     }
   }
 
-  public private(set) var printer: NiimbotPeripheral?
+  private var printer: NiimbotPeripheral?
   var deviceInfo: NiimbotPeripheral.DeviceInfo?
   var paperRfidState: NiimbotPeripheral.RFIDPaperRollState?
   var deviceStatus: NiimbotPeripheral.DeviceStatus?
