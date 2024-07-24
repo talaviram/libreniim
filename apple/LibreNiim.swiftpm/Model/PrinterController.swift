@@ -14,7 +14,7 @@ class PrinterController: ObservableObject {
   }
 
   var isPrinting: Bool {
-    return printer?.isPrinting ?? false
+    return printer?.state.isPrinting ?? false
   }
 
   init() {
@@ -28,7 +28,7 @@ class PrinterController: ObservableObject {
   }
 
   func printStatus() -> NiimbotPeripheral.PrintJobStatus? {
-    return printer?.jobStatus
+    return printer?.state.jobStatus
   }
 
   func reconnect() {

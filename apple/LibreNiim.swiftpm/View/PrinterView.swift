@@ -82,7 +82,7 @@ struct PrinterView: View {
             model.deviceInfo?.model ?? NiimbotPeripheral.Product.unknown)
         }
         .overlay(alignment: .top) {
-          if let error = model.printer?.error {
+          if let error = model.printer?.state.error {
             Text("Error: \(error)")
               .foregroundStyle(.white)
               .background(.red)

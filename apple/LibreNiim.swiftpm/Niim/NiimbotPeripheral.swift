@@ -12,13 +12,11 @@ class NiimbotPeripheral: ObservableObject {
     return peripheral.state
   }
 
+  @Published var state = PrinterState()
+
   let peripheral: Peripheral
   private let characteristic: Characteristic
   private let centralManager: CentralManager
-
-  @Published var isPrinting = false
-  @Published var jobStatus: PrintJobStatus?
-  @Published var error: String?
 
   private var responseNotifications: Set<AnyCancellable> = []
   private var response: NiimbotPacket?
@@ -289,19 +287,19 @@ class NiimbotPeripheral: ObservableObject {
   }
 
   func printLabel(_ job: PrintJob) async {
-    guard isPrinting == false else {
-      error = "Previous printing is still in progress?"
+    guard state.isPrinting == false else {
+      state.error = "Previous printing is still in progress?"
       return
     }
-    isPrinting = true
+    state.isPrinting = true
     if await !_printLabel(job) {
-      error = "Failed Printing!"
+      state.error = "Failed Printing!"
     }
-    isPrinting = false
+    state.isPrinting = false
   }
 
   private func _printLabel(_ job: PrintJob) async -> Bool {
-    error = ""
+    state.error = ""
     guard job.data.count > 1 else { return false }
     guard
       await setModeCommand(
@@ -340,9 +338,9 @@ class NiimbotPeripheral: ObservableObject {
       let res = await transceiveRaw(
         jumboPacket, expectedResponseType: CmdType.IMAGE_RECEIVED.rawValue)
       if res == nil {
-        error = "Failed sending to printer!"
+        state.error = "Failed sending to printer!"
       } else {
-        error = res.debugDescription
+        state.error = res.debugDescription
         print(res.debugDescription)
       }
       sentPacket += 1
@@ -362,10 +360,10 @@ class NiimbotPeripheral: ObservableObject {
       #if DEBUG
         print("jobstatus: \(jobStatus.page) \(jobStatus.progress.description)")
       #endif
-      self.jobStatus = jobStatus
+      self.state.jobStatus = jobStatus
       try? await Task.sleep(seconds: 0.1)
     }
-    self.jobStatus = nil
+    self.state.jobStatus = nil
   }
 
   private func setQuantity(_ quantity: UInt16) async -> Bool {
@@ -399,8 +397,8 @@ class NiimbotPeripheral: ObservableObject {
       } catch {
         DispatchQueue.main.async {
           // TODO: actually use this
-          self.error = error.localizedDescription
-          print(self.error ?? "Missing Error?")
+          self.state.error = error.localizedDescription
+          print(self.state.error ?? "Missing Error?")
         }
       }
     }
@@ -549,7 +547,7 @@ class NiimbotPeripheral: ObservableObject {
     // TODO: make it better
     print("Failed \(error.localizedDescription)")
     DispatchQueue.main.async {
-      self.error = error.localizedDescription
+      self.state.error = error.localizedDescription
     }
   }
 
