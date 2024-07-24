@@ -90,6 +90,7 @@ class PrinterController: ObservableObject {
 
   private var serialQueue = SerialQueue()
   private var btNotifications: Set<AnyCancellable> = []
+  private var printerNotifications: AnyCancellable?
 
   private func pollHeartbeat() {
     let timeToPollInSeconds = 3.0
@@ -127,6 +128,10 @@ class PrinterController: ObservableObject {
     // clear status/info
     deviceInfo = nil
     deviceStatus = nil
+    printerNotifications = nil
+    DispatchQueue.main.async {
+      self.objectWillChange.send()
+    }
   }
 
   private func notifyIfSamePeripheral(_ peripheral: Peripheral) {
@@ -144,6 +149,12 @@ class PrinterController: ObservableObject {
       safelyRemovePeripheral()
     }
     printer = validPrinter
+    printerNotifications = validPrinter.$state.sink(receiveValue: {
+      newState in
+      DispatchQueue.main.async {
+        self.objectWillChange.send()
+      }
+    })
     serialQueue = SerialQueue()
     _ = serialQueue.addJob {
       guard let info = await self.printer?.getDeviceInfo() else { return }
