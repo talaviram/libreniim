@@ -292,41 +292,39 @@ class NiimbotPeripheral: ObservableObject {
       return
     }
     state.isPrinting = true
-    if await !_printLabel(job) {
-      state.error = "Failed Printing!"
-    }
+    state.error = await _printLabel(job)
     state.isPrinting = false
   }
 
-  private func _printLabel(_ job: PrintJob) async -> Bool {
+  private func _printLabel(_ job: PrintJob) async -> String? {
     state.error = ""
-    guard job.data.count > 1 else { return false }
+    guard job.data.count > 1 else { return "Unexpected print data." }
     guard
       await setModeCommand(
         requestCode: CmdType.SET_LABEL_TYPE, value: job.labelType, responseOffset: 16) == true
-    else { return false }
+    else { return "Failed setting label type." }
     guard
       await setModeCommand(requestCode: CmdType.SET_LABEL_DENSITY, value: job.density.rawValue)
         == true
-    else { return false }
+    else { return "Failed setting label density." }
     guard await setModeCommand(requestCode: CmdType.START_PRINT, value: 0x01) == true else {
-      return false
+      return "Failed starting print."
     }
     guard
       await setModeCommand(
         requestCode: CmdType.ALLOW_PRINT_CLEAR, value: job.density.rawValue, responseOffset: 16)
         == true
-    else { return false }
+    else { return "Failed setting print clear." }
     guard await setModeCommand(requestCode: CmdType.STATE_PAGE_PRINT, value: 0x01) == true else {
-      return false
+      return "Failed setting start page."
     }
     guard
       await setModeCommand(
         requestCode: CmdType.SET_DIMENSION,
         values: job.widthInPx.toBigEndianAsUInt8() + job.heightInPx.toBigEndianAsUInt8(),
         responseOffset: 16) == true
-    else { return false }
-    guard await setQuantity(job.quantity) else { return false }
+    else { return "Failed setting dimension to \(job.widthInPx)x\(job.heightInPx) px" }
+    guard await setQuantity(job.quantity) else { return "Failed setting quantity." }
     var sentPacket = 0
     for packets in job.data {
       var jumboPacket = Data()
@@ -350,9 +348,9 @@ class NiimbotPeripheral: ObservableObject {
     }
     await busyWaitPrintJobToEnd()
     guard await setModeCommand(requestCode: CmdType.END_PRINT, value: 0x01) == true else {
-      return false
+      return "End print timeout."
     }
-    return true
+    return ""
   }
 
   private func busyWaitPrintJobToEnd() async {
