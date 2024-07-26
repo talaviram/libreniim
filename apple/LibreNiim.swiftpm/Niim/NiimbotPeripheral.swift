@@ -347,10 +347,10 @@ class NiimbotPeripheral: ObservableObject {
       try? await Task.sleep(seconds: 0.2)
     }
     await busyWaitPrintJobToEnd()
-    guard await setModeCommand(requestCode: CmdType.END_PRINT, value: 0x01) == true else {
-      return "End print timeout."
+    while await setModeCommand(requestCode: CmdType.END_PRINT, value: 0x01) != true {
+      try? await Task.sleep(seconds: 0.1)
     }
-    return ""
+    return nil
   }
 
   private func busyWaitPrintJobToEnd() async {
