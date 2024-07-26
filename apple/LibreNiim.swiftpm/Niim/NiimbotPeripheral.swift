@@ -343,7 +343,7 @@ class NiimbotPeripheral: ObservableObject {
       sentPacket += 1
     }
     while await endPage() != true {
-      try? await Task.sleep(seconds: 0.02)
+      try? await Task.sleep(seconds: 0.2)
     }
     await busyWaitPrintJobToEnd()
     guard await setModeCommand(requestCode: CmdType.END_PRINT, value: 0x01) == true else {
@@ -358,7 +358,7 @@ class NiimbotPeripheral: ObservableObject {
         print("jobstatus: \(jobStatus.page) \(jobStatus.progress.description)")
       #endif
       self.state.jobStatus = jobStatus
-      try? await Task.sleep(seconds: 0.1)
+      try? await Task.sleep(seconds: 0.2)
     }
     self.state.jobStatus = nil
   }
