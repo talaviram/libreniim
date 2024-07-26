@@ -338,7 +338,6 @@ class NiimbotPeripheral: ObservableObject {
       if res == nil {
         state.error = "Failed sending to printer!"
       } else {
-        state.error = res.debugDescription
         print(res.debugDescription)
       }
       sentPacket += 1
