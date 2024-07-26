@@ -294,10 +294,11 @@ class NiimbotPeripheral: ObservableObject {
     state.isPrinting = true
     state.error = await _printLabel(job)
     state.isPrinting = false
+    state.jobStatus = nil
   }
 
   private func _printLabel(_ job: PrintJob) async -> String? {
-    state.error = ""
+    state.error = nil
     guard job.data.count > 1 else { return "Unexpected print data." }
     guard
       await setModeCommand(
