@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct PrintJobStatusView: View {
-  let job: NiimbotPeripheral.PrintJobStatus
+  let job: NiimbotPeripheral.PrintJobStatus?
   let quantity: Int
 
-  func calcProgress() -> Float {
+    func calcProgress(_ job: NiimbotPeripheral.PrintJobStatus) -> Float {
     let steps = job.progress.count
     var total = 0
     for progress in job.progress {
@@ -15,8 +15,12 @@ struct PrintJobStatusView: View {
 
   var body: some View {
     VStack {
-      Text("Printing... \(job.page)/\(quantity)").foregroundStyle(.white)
-      ProgressView(value: calcProgress()).tint(.white)
+        if let ongoingJob = job {
+            Text("Printing... \(ongoingJob.page)/\(quantity)").foregroundStyle(.white)
+            ProgressView(value: calcProgress(ongoingJob)).tint(.white)
+        } else {
+            Text("Waiting for printer...").foregroundStyle(.white)
+        }
       ProgressView().tint(.white)
     }
     .padding()

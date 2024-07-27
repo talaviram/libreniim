@@ -85,7 +85,7 @@ struct PrinterView: View {
             labelModel.isInverted = NiimbotPeripheral.shouldInvertCanvas(
               model.deviceInfo?.model ?? NiimbotPeripheral.Product.unknown)
           }
-          .blur(radius: model.isPrinting ? 10 : 0)
+          .blur(radius: model.isPrinting ? 5 : 0)
           .overlay(alignment: .top) {
             if let error = model.error {
               Text("Error: \(error)")
@@ -95,10 +95,10 @@ struct PrinterView: View {
             }
           }
           .navigationBarBackButtonHidden(true)
-        if model.isPrinting, let status = model.printStatus() {
+        if model.isPrinting {
           // TODO: support quantity
           let rectSize = min(area.size.width, area.size.height) * 0.60
-          PrintJobStatusView(job: status, quantity: 1)
+            PrintJobStatusView(job: model.printStatus(), quantity: 1)
             .frame(width: rectSize, height: rectSize)
         }
       }
