@@ -257,7 +257,7 @@ class NiimbotPeripheral: ObservableObject {
       return nil
     }
     // TODO: sometimes I got incomplete data?
-    let count = response.count
+    let count = response.datacount
     var idx = 0
     let uuid = NiimbotPacket.convertToHex(response.bytesAt(start: idx, inclusiveEnd: idx + 8))
     idx += 8
