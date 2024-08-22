@@ -1,0 +1,22 @@
+{
+  "name": "labeleditor",
+  "version": "1.0.0",
+  "description": "Label Printers Editor",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel serve src/index.html --public-url / --dist-dir dist",
+    "build": "parcel build"
+  },
+  "author": "Tal Aviram",
+  "license": "MIT",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
+    "parcel": "^2.12.0"
+  },
+  "dependencies": {
+    "@migliori/universal-icon-picker": "^1.1.6",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
+    "fabric": "^6.0.2"
+  }
+}
