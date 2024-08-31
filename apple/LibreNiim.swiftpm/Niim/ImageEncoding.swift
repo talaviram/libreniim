@@ -110,6 +110,23 @@ struct Bitmap {
   }
 }
 
+extension UIImage {
+  func replacingAlphaWithWhite() -> UIImage? {
+    let format = UIGraphicsImageRendererFormat.default()
+    format.opaque = true  // Make the renderer opaque
+
+    let renderer = UIGraphicsImageRenderer(size: self.size, format: format)
+    let image = renderer.image { context in
+      UIColor.white.setFill()  // Set white color as fill
+      context.fill(CGRect(origin: .zero, size: self.size))  // Fill the background with white
+
+      self.draw(at: .zero)  // Draw the original image
+    }
+
+    return image
+  }
+}
+
 extension CGImage {
   func asBitmap() -> Bitmap {
     var bitmapData: [Bool] = []
