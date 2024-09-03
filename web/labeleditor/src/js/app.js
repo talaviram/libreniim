@@ -323,6 +323,12 @@ function init() {
     .getElementById("deleteSelectedButton")
     .addEventListener("click", deleteSelectedObjects);
 
+  document.getElementById("deselectButton")
+    .addEventListener("click", () => {
+      canvas.discardActiveObject();
+      canvas.renderAll();
+  })
+
   canvas.on("selection:created", handleSelectionChanged);
   canvas.on("selection:cleared", handleSelectionChanged);
   canvas.on("selection:updated", handleSelectionChanged);
