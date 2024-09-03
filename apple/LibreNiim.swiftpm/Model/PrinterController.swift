@@ -57,7 +57,8 @@ class PrinterController: ObservableObject {
   func tryPrint(_ image: UIImage, verticalPrint: Bool, quantity: Int = 1) {
     // TODO: avoid if no paper available!
 
-    guard let cgImage = image.cgImage, let scaledImage = cgImage.rescale(by: image.scale) else {
+      guard let noAlphaImage = image.replacingAlphaWithWhite() else { return }
+    guard let cgImage = noAlphaImage.cgImage, let scaledImage = cgImage.rescale(by: noAlphaImage.scale) else {
       return
     }
     let printImage = verticalPrint ? scaledImage.roatatedBy90() : scaledImage

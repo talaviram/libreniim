@@ -113,6 +113,7 @@ struct Bitmap {
 extension UIImage {
   func replacingAlphaWithWhite() -> UIImage? {
     let format = UIGraphicsImageRendererFormat.default()
+    format.scale = self.scale  // Preserve the original scale
     format.opaque = true  // Make the renderer opaque
 
     let renderer = UIGraphicsImageRenderer(size: self.size, format: format)
@@ -175,7 +176,6 @@ extension CGImage {
 
     let rotatedSize = CGSize(width: height, height: width)
     let colorSpace = colorSpace ?? CGColorSpaceCreateDeviceRGB()
-
     guard
       let context = CGContext(
         data: nil,
