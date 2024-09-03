@@ -6,6 +6,7 @@ struct ContentView: View {
 
   var body: some View {
     NavigationView {
+      //        PrinterView(model: model)
       if !model.isConnected {
         VStack {
           VStack {
