@@ -7,6 +7,20 @@ struct PrinterView: View {
   @State var scanDevicesView = false
   @State var showDeviceInfo = false
   @State private var labelModel = LabelModel()
+    static var webView = WebView()
+
+    func onImageCaptured (_ image: UIImage?) {
+        guard let gotImage = image else { return }
+        model.tryPrint(gotImage, verticalPrint: labelModel.isInverted)
+    }
+
+    init(model: PrinterController, scanDevicesView: Bool = false, showDeviceInfo: Bool = false, labelModel: LabelModel = LabelModel()) {
+        self.model = model
+        self.scanDevicesView = scanDevicesView
+        self.showDeviceInfo = showDeviceInfo
+        self.labelModel = labelModel
+        WebView.shared.onImageAvailable = onImageCaptured
+    }
 
   var body: some View {
     GeometryReader {
@@ -32,14 +46,16 @@ struct PrinterView: View {
               }
             }
           } else {
-            LabelPreview(labelModel: labelModel).border(.black)
-            LabelView(labelModel: $labelModel).disabled(model.isPrinting)
+              PrinterView.webView
+//            LabelPreview(labelModel: labelModel).border(.black)
+//            LabelView(labelModel: $labelModel).disabled(model.isPrinting)
             Button(
               "Print",
               action: {
-                if let image = labelModel.makeImage() {
-                  model.tryPrint(image, verticalPrint: labelModel.isInverted)
-                }
+                  PrinterView.webView.exportCanvas()
+//                if let image = labelModel.makeImage() {
+//                  model.tryPrint(image, verticalPrint: labelModel.isInverted)
+//                }
               }
             )
             .buttonStyle(.borderedProminent)
