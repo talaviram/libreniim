@@ -5,6 +5,12 @@ Open-source, end user, privacy focused printing app(s) for [Niimbot](https://www
 ### Where to download?
 [TestFlight for macOS/iPad/iPhone](https://testflight.apple.com/join/UDG3UREI)
 
+### Android / Windows / Linux?
+
+Originally I've started making a web based editor to be used with some ble printing web stack.
+But there's already a project by someone named MultiMote you should check - https://github.com/MultiMote/niimblue
+NiimBlue above should work on Chrome based browsers, including Android.
+
 It all started when I bought a D110 just to discover the appstore apps (iOS and Android) got in-app purchase built-into them which already got me wondering.
 Then when trying to install it an old Android phone with custom rom, it complained it is rooted and didn't agree to run...
 
