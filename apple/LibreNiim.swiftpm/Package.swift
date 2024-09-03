@@ -33,7 +33,8 @@ let package = Package(
         .portraitUpsideDown(.when(deviceFamilies: [.pad])),
       ],
       capabilities: [
-        .bluetoothAlways(purposeString: "The app uses Bluetooth to connect with label printers")
+        .bluetoothAlways(purposeString: "The app uses Bluetooth to connect with label printers"),
+        .outgoingNetworkConnections(),
       ],
       appCategory: .productivity
     )
