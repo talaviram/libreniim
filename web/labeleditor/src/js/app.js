@@ -1,6 +1,5 @@
-import * as bootstrap from "bootstrap";
 import * as fabric from "fabric";
-const canvas = new fabric.Canvas("labelCanvas");
+export const canvas = new fabric.Canvas("labelCanvas");
 
 const MIN_FONT_SIZE = 16;
 const MAX_FONT_SIZE = 100;
@@ -113,6 +112,7 @@ const objectAlignCenter = document.getElementById("align-center");
 const objectAlignEnd = document.getElementById("align-end");
 const objectAlignTop = document.getElementById("align-top");
 const objectAlignBottom = document.getElementById("align-bottom");
+const alignInspector = document.getElementById("align-inspector");
 
 const qrInspector = document.getElementById("qr-inspector");
 const qrSelectedText = document.getElementById("qr-text");
@@ -130,11 +130,13 @@ const fontSizeMinus = document.getElementById("font-size-minus");
 function handleSelectionChanged(options) {
   let isIText = false;
   let isQR = false;
+  let canAlign = false;
   let objs;
   if (options.selected) {
     objs = options.selected;
     isIText = objs[0] instanceof fabric.IText;
     isQR = objs[0].qrText != null && objs[0].qrText != undefined;
+    canAlign = objs.length === 1;
   }
   textInspector.hidden = !isIText;
   if (isIText) {
@@ -145,31 +147,29 @@ function handleSelectionChanged(options) {
   if (isQR) {
     qrText = objs[0].qrText;
   }
+  alignInspector.hidden = !canAlign;
+}
+
+function toggleClass(button, isActive) {
+  const activeClass = ["active"];
+  if (isActive) {
+    button.classList.add(activeClass);
+  }
+  else {
+    button.classList.remove(activeClass);
+  }
 }
 
 function setTextInspectorIfNeeded(textItem) {
-  const activeClass = ["btn-primary", "active"];
   for (option in fontFamilySelect.children) {
     const currentFamily = textItem.get("fontFamily");
     let current = fontFamilySelect[option].value;
     fontFamilySelect[option].selected = current === currentFamily;
   }
-  textItalic.classList.remove(activeClass);
-  if (textItem.get("fontStyle") === "italic") {
-    textItalic.classList.add(activeClass);
-  }
-  textBold.classList.remove(activeClass);
-  if (textItem.get("fontWeight") === "bold") {
-    textBold.classList.add(activeClass);
-  }
-  textUnderline.classList.remove(activeClass);
-  if (textItem.get("underline")) {
-    textUnderline.classList.add(activeClass);
-  }
-  textStrikethrough.classList.remove(activeClass);
-  if (textItem.get("linethrough")) {
-    textStrikethrough.classList.add(activeClass);
-  }
+  toggleClass(textBold, textItem.get("fontWeight") === "bold");
+  toggleClass(textItalic, textItem.get("fontStyle") === "italic");
+  toggleClass(textUnderline, textItem.get("underline"));
+  toggleClass(textStrikethrough, textItem.get("linethrough"));
 }
 
 function appendTextToCurrentIText(text) {
@@ -186,7 +186,7 @@ function createQR() {
   const qrText = qrSelectedText.value;
   const generatedQR = new QRCode({
     msg: qrText,
-    dim: 512,
+    dim: 128,
     pad: 4,
     mtx: -1,
     ecl: "M",
@@ -229,25 +229,25 @@ function init() {
   });
 
   textBold.addEventListener("click", () => {
-    const isBold = !textBold.classList.contains("active");
+    const isBold = textBold.classList.contains("active");
     if ((obj = setIfIText("fontWeight", isBold ? "normal" : "bold")))
       setTextInspectorIfNeeded(obj);
   });
 
   textItalic.addEventListener("click", () => {
-    const isItalic = !textItalic.classList.contains("active");
+    const isItalic = textItalic.classList.contains("active");
     if ((obj = setIfIText("fontStyle", isItalic ? "normal" : "italic")))
       setTextInspectorIfNeeded(obj);
   });
 
   textUnderline.addEventListener("click", () => {
-    const isUnderline = textUnderline.classList.contains("active");
+    const isUnderline = !textUnderline.classList.contains("active");
     if ((obj = setIfIText("underline", isUnderline)))
       setTextInspectorIfNeeded(obj);
   });
 
   textStrikethrough.addEventListener("click", () => {
-    const isStrikethrough = textStrikethrough.classList.contains("active");
+    const isStrikethrough = !textStrikethrough.classList.contains("active");
     if ((obj = setIfIText("linethrough", isStrikethrough)))
       setTextInspectorIfNeeded(obj);
   });
@@ -366,10 +366,7 @@ function alignObject(obj, alignment) {
       });
       break;
     case "center":
-      obj.set({
-        left: (canvas.width - obj.width) / 2,
-        top: (canvas.height - obj.height) / 2,
-      });
+      canvas.centerObject (obj);
       break;
     default:
       console.error("Invalid alignment:", alignment);
@@ -382,6 +379,7 @@ function alignObjectsOnCanvas(objects, alignType) {
   objects.forEach((obj) => {
     alignObject(obj, alignType);
   });
+  canvas.renderAll();
 }
 
 // Predefined font list

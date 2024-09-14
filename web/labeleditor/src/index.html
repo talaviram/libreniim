@@ -12,80 +12,101 @@
 
 <body>
     <div class="container">
-        <div class="row justify-content-center">
-            <canvas style="border:2px solid black !important;" id="labelCanvas" width="240" height="96"></canvas>
-        </div>
-    </div>
-    <div id="selectedIconContainer"></div>
-    <div id="inspector" class="card">
-        <div class="container">
-            <div id="object-insepctor" class="d-flex justify-content-between flex-wrap">
+        <div id="canvas_area" class="main">
+            <div class="canvas-container">
+                <canvas style="border:2px solid black" id="labelCanvas" width="240" height="96"></canvas>
+            </div>
+            <div id="inspectors">
                 <div>
-                    <ul class="nav justify-content-center">
-                        <li class="nav-item">
-                            <button type="button" class="btn" id="addTextButton"><img
-                                    src="static/textarea-t.svg"></button>
-                        </li>
-                        <li class="nav-item">
-                            <button type="button" class="btn" id="addCircleButton"><img
-                                    src="static/circle.svg"></button>
-                        </li>
-                        <li class="nav-item">
-                            <button type="button" class="btn" id="addRectButton"><img src="static/square.svg"></button>
-                        </li>
-                        <li class="nav-item">
-                            <button type="button" class="btn" id="addTriangleButton"><img
-                                    src="static/triangle.svg"></button>
-                        </li>
-                        <li class="nav-item">
-                            <button type="button" class="btn" id="addLineButton"><img src="static/dash-lg.svg"></button>
-                        </li>
-                        <li class="nav-item"">
-                            <button type=" button" class="btn" id="addQRButton"><img src="static/qr-code.svg"></button>
-                        </li>
-                    </ul>
-                </div>
-                <div class="justify-content-center">
-                    <button type="button" class="btn" id="align-start"><img src="static/align-start.svg"></button>
-                    <button type="button" class="btn" id="align-center"><img src="static/align-center.svg"></button>
-                    <button type="button" class="btn" id="align-end"><img src="static/align-end.svg"></button>
-                    <button type="button" class="btn" id="align-top"><img src="static/align-top.svg"></button>
-                    <button type="button" class="btn" id="align-bottom"><img src="static/align-bottom.svg"></button>
-                    <button type="button" class="btn" id="deleteSelectedButton"><img src="static/trash.svg"></button>
+                    <div id="object-insepctor">
+                        <div class="container with-margin">
+                            <button type="button" class="btn" id="deselectButton">Deselect All</button>
+                            <ul>
+                                <li class="nav-item">
+                                    <button type="button" class="btn" id="addTextButton"><img
+                                            src="static/textarea-t.svg"></button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="button" class="btn" id="addCircleButton"><img
+                                            src="static/circle.svg"></button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="button" class="btn" id="addRectButton"><img
+                                            src="static/square.svg"></button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="button" class="btn" id="addTriangleButton"><img
+                                            src="static/triangle.svg"></button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="button" class="btn" id="addLineButton"><img
+                                            src="static/dash-lg.svg"></button>
+                                </li>
+                                <li class="nav-item"">
+                                <button type=" button" class="btn" id="addQRButton"><img
+                                        src="static/qr-code.svg"></button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sides">
+                            <div class="container">
+                                <div id="align-inspector" class="align-items: stretch;" hidden>
+                                    <button type="button" class="btn" id="align-start"><img
+                                            src="static/align-start.svg"></button>
+                                    <button type="button" class="btn" id="align-center"><img
+                                            src="static/align-center.svg"></button>
+                                    <button type="button" class="btn" id="align-end"><img
+                                            src="static/align-end.svg"></button>
+                                    <button type="button" class="btn" id="align-top"><img
+                                            src="static/align-top.svg"></button>
+                                    <button type="button" class="btn" id="align-bottom"><img
+                                            src="static/align-bottom.svg"></button>
+                                </div>
+                            </div>
+                            <div>
+                                <button type="button" class="btn" style="align-self: flex-end;"
+                                    id="deleteSelectedButton"><img src="static/trash.svg"></button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button type="button" id="deselectButton">Deselect All</button>
-        </div>
-    </div>
-    <div class="p-2">
-        <div id="qr-inspector" hidden class="container">
-            <input type="text" id="qr-text" placeholder="Enter QR text here..." class="form-control" id="qr_text">
-        </div>
-        <div id="text-inspector" hidden class="container">
-            <div class="form-group d-flex justify-content-center align-items-center">
-                <button type="button" class="btn" id="text-current-time"><img src="static/clock.svg"></button>
-                <button type="button" class="btn" id="text-current-date"><img src="static/calendar-event.svg"></button>
-                <div class="form-group p-2">
-                    <select class="form-control" id="font-family">
-                    </select>
+            <div id="qr-inspector" hidden>
+                <input type="text" id="qr-text" placeholder="Enter QR text here..." class="form-control" id="qr_text">
+            </div>
+            <div class="container with-margin">
+                <div id="text-inspector" hidden>
+                    <div>
+                        <div class="container with-margin">
+                            <div class="form-group p-2">
+                                <select class="form-control" id="font-family" />
+                            </div>
+                            <div class="form-group p-2">
+                                <select class="form-control" id="font-size" />
+                            </div>
+                            <button type="button" class="btn" id="font-size-plus"><img
+                                    src="static/plus-lg.svg"></button>
+                            <button type="button" class="btn" id="font-size-minus"><img
+                                    src="static/dash-lg.svg"></button>
+
+                        </div>
+                        <div style="align-content: space-between;">
+                            <button type="button" class="btn" id="text-current-time"><img
+                                    src="static/clock.svg"></button>
+                            <button type="button" class="btn" id="text-current-date"><img
+                                    src="static/calendar-event.svg"></button>
+                            <button type="button" class="btn" id="text-bold"><img src="static/type-bold.svg"></button>
+                            <button type="checkbox" class="btn" id="text-italic"><img
+                                    src="static/type-italic.svg"></button>
+                            <button type="checkbox" class="btn" data-bs-toggle="button" id="text-underline"><img
+                                    src="static/type-underline.svg"></button>
+                            <button type="checkbox" class="btn" data-bs-toggle="button" id="text-strikethrough"><img
+                                    src="static/type-strikethrough.svg"></button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group p-2">
-                    <select class="form-control" id="font-size">
-                    </select>
-                </div>
-                <button type="button" class="btn" id="font-size-plus"><img src="static/plus-lg.svg"></button>
-                <button type="button" class="btn" id="font-size-minus"><img src="static/dash-lg.svg"></button>
-                <button type="button" class="btn" data-bs-toggle="button" id="text-bold"><img
-                        src="static/type-bold.svg"></button>
-                <button type="button" class="btn" data-bs-toggle="button" id="text-italic"><img
-                        src="static/type-italic.svg"></button>
-                <button type="button" class="btn" data-bs-toggle="button" id="text-underline"><img
-                        src="static/type-underline.svg"></button>
-                <button type="button" class="btn" data-bs-toggle="button" id="text-strikethrough"><img
-                        src="static/type-strikethrough.svg"></button>
             </div>
         </div>
-    </div>
     </div>
 </body>
 
