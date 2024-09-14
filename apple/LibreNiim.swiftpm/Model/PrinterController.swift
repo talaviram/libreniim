@@ -58,11 +58,12 @@ class PrinterController: ObservableObject {
     // TODO: avoid if no paper available!
 
       guard let noAlphaImage = image.replacingAlphaWithWhite() else { return }
-    guard let cgImage = noAlphaImage.cgImage, let scaledImage = cgImage.rescale(by: noAlphaImage.scale) else {
+      guard let cgImage = noAlphaImage.cgImage, let scaledImage = cgImage.rescale(by: noAlphaImage.scale)?.monochrome else {
       return
     }
     let printImage = verticalPrint ? scaledImage.roatatedBy90() : scaledImage
     let imageAsPackets = encodeImageToPackets(image: printImage!.asBitmap())
+      return;
     guard printer != nil, imageAsPackets.count > 1, quantity > 0 else {
       assertionFailure("Image encoding failed?")
       return
