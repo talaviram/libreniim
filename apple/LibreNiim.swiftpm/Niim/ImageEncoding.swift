@@ -1,6 +1,8 @@
 import CoreGraphics
 import SwiftUI
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 //MARK: Image Encoding
 func encodeImageToPackets(image: Bitmap) -> [[NiimbotPacket]] {
@@ -171,6 +173,21 @@ extension CGImage {
     context.draw(self, in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
     return context.makeImage()
   }
+
+    var monochrome: CGImage? {
+        let inputImage = CIImage(cgImage: self)
+        let controlFilter = CIFilter.colorControls()
+        controlFilter.inputImage = inputImage
+        controlFilter.saturation = 0.0
+        controlFilter.contrast = 1.0
+        let thresholdFilter = CIFilter.colorThreshold()
+        thresholdFilter.inputImage = controlFilter.outputImage
+        thresholdFilter.threshold = 0.25
+        let filteredImage = thresholdFilter.outputImage!
+        let context = CIContext()
+           let cgImage = context.createCGImage(filteredImage, from: filteredImage.extent)!
+        return cgImage
+    }
 
   func roatatedBy90() -> CGImage? {
 
