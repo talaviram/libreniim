@@ -9,20 +9,9 @@ struct WebView: UIViewRepresentable {
 
     func exportCanvas() {
         let script = """
-        function backingScale(context) {
-          if ('devicePixelRatio' in window) {
-              if (window.devicePixelRatio > 1) {
-                  return window.devicePixelRatio;
-              }
-          }
-          return 1;
-        }
-        document.getElementById('deselectButton').click();
-        var canvas = document.getElementById('labelCanvas');
-        const canvasScale = backingScale(canvas.getContext("2d"));
-        var dataURL = canvas.toDataURL('image/png');
-        window.webkit.messageHandlers.imageHandler.postMessage({"dataURL": dataURL, "scale": canvasScale});
+        exportCanvas();
         """
+        print(WebView.shared.view?.configuration.userContentController.userScripts.count)
         WebView.shared.view!.evaluateJavaScript(script, completionHandler: {
             _, err in
             print("Javascript Image Export Error", err.debugDescription)
@@ -34,6 +23,24 @@ struct WebView: UIViewRepresentable {
         webView.navigationDelegate = context.coordinator
         webView.loadURL("http://127.0.0.1:1234")
         WebView.shared.view = webView
+        let script = """
+        function backingScale(context) {
+          if ('devicePixelRatio' in window) {
+              if (window.devicePixelRatio > 1) {
+                  return window.devicePixelRatio;
+              }
+          }
+          return 1;
+        }
+        function exportCanvas() {
+            document.getElementById('deselectButton').click();
+            var canvas = document.getElementById('labelCanvas');
+            const canvasScale = backingScale(canvas.getContext("2d"));
+            var dataURL = canvas.toDataURL('image/png');
+            window.webkit.messageHandlers.imageHandler.postMessage({"dataURL": dataURL, "scale": canvasScale});
+        }
+        """
+        webView.configuration.userContentController.addUserScript(WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false))
         return webView
     }
 
@@ -53,7 +60,7 @@ struct WebView: UIViewRepresentable {
         }
 
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-                webView.configuration.userContentController.add(self, name: "imageHandler")
+            webView.configuration.userContentController.add(self, name: "imageHandler")
         }
 
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
