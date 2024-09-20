@@ -383,11 +383,14 @@ function init() {
     .getElementById("deleteSelectedButton")
     .addEventListener("click", deleteSelectedObjects);
 
-  document.getElementById("deselectButton")
-    .addEventListener("click", () => {
-      canvas.discardActiveObject();
-      canvas.renderAll();
-  })
+  document.getElementById("selectAllButton").addEventListener("click", () => {
+    canvas.discardActiveObject();
+    const sel = new fabric.ActiveSelection(canvas.getObjects(), {
+      canvas: canvas,
+    });
+    canvas.setActiveObject(sel);
+    canvas.requestRenderAll();
+  });
 
   canvas.on("selection:created", handleSelectionChanged);
   canvas.on("selection:cleared", handleSelectionChanged);
