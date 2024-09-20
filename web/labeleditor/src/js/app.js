@@ -1,5 +1,6 @@
 import * as fabric from "fabric";
 export const canvas = new fabric.Canvas("labelCanvas");
+window.canvas = canvas;
 
 const MIN_FONT_SIZE = 16;
 const MAX_FONT_SIZE = 100;
