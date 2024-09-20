@@ -151,7 +151,11 @@ function handleSelectionChanged(options) {
     if (objs.length === 1) {
       canAlign = true;
       const type = objs[0].type;
-      isSimpleObject = type === 'rect' || type === 'circle' || type === 'triangle' || type === 'line';
+      isSimpleObject =
+        type === "rect" ||
+        type === "circle" ||
+        type === "triangle" ||
+        type === "line";
     }
   }
   textInspector.hidden = !isIText;
@@ -166,18 +170,15 @@ function handleSelectionChanged(options) {
   alignInspector.hidden = !canAlign;
   zInspector.hidden = !canAlign;
   objectColorInspector.hidden = !isSimpleObject;
-  if (!isSimpleObject)
-    objectColorInspector.classList.add("hidden");
-  else
-    objectColorInspector.classList.remove("hidden");
+  if (!isSimpleObject) objectColorInspector.classList.add("hidden");
+  else objectColorInspector.classList.remove("hidden");
 }
 
 function toggleClass(button, isActive) {
   const activeClass = ["active"];
   if (isActive) {
     button.classList.add(activeClass);
-  }
-  else {
+  } else {
     button.classList.remove(activeClass);
   }
 }
@@ -275,12 +276,12 @@ function init() {
   });
 
   textBlack.addEventListener("click", () => {
-    canvas.getActiveObject().set('fill', 'black');
+    canvas.getActiveObject().set("fill", "black");
     canvas.renderAll();
   });
 
   textWhite.addEventListener("click", () => {
-    canvas.getActiveObject().set('fill', 'white');
+    canvas.getActiveObject().set("fill", "white");
     canvas.renderAll();
   });
 
@@ -331,20 +332,20 @@ function init() {
   });
 
   objectStrokeBlackButton.addEventListener("click", () => {
-    canvas.getActiveObject().set('stroke', 'black');
+    canvas.getActiveObject().set("stroke", "black");
     canvas.renderAll();
   });
   objectStrokeWhiteButton.addEventListener("click", () => {
-    canvas.getActiveObject().set('stroke', 'white');
+    canvas.getActiveObject().set("stroke", "white");
     canvas.renderAll();
   });
 
   objectFillBlackButton.addEventListener("click", () => {
-    canvas.getActiveObject().set('fill', 'black');
+    canvas.getActiveObject().set("fill", "black");
     canvas.renderAll();
   });
   objectFillWhiteButton.addEventListener("click", () => {
-    canvas.getActiveObject().set('fill', 'white');
+    canvas.getActiveObject().set("fill", "white");
     canvas.renderAll();
   });
 
@@ -429,7 +430,7 @@ function alignObject(obj, alignment) {
       });
       break;
     case "center":
-      canvas.centerObject (obj);
+      canvas.centerObject(obj);
       break;
     default:
       console.error("Invalid alignment:", alignment);
