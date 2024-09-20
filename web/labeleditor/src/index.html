@@ -62,6 +62,11 @@
                                     <button type="button" class="btn" id="align-bottom"><img
                                             src="static/align-bottom.svg"></button>
                                 </div>
+                                <div id="z-inspector" class="align-items: stretch;" hidden>
+                                    <button type="button" class="btn" id="to-front"><img
+                                            src="static/front.svg"></button>
+                                    <button type="button" class="btn" id="to-back"><img src="static/back.svg"></button>
+                                </div>
                             </div>
                             <div>
                                 <button type="button" class="btn" style="align-self: flex-end;"
@@ -69,6 +74,16 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div style="width: 100%;">
+                <div id="object-color-inspector" class="fill-and-stroke-container hidden">
+                    <p>Stroke </p>
+                    <button type="button" class="rect black" id="stroke-black"></button>
+                    <button type="button" class="rect white" id="stroke-white"></button>
+                    <p>Fill </p>
+                    <button type="button" class="rect black" id="fill-black"></button>
+                    <button type="button" class="rect white" id="fill-white"></button>
                 </div>
             </div>
             <div id="qr-inspector" hidden>
@@ -96,12 +111,14 @@
                             <button type="button" class="btn" id="text-current-date"><img
                                     src="static/calendar-event.svg"></button>
                             <button type="button" class="btn" id="text-bold"><img src="static/type-bold.svg"></button>
-                            <button type="checkbox" class="btn" id="text-italic"><img
+                            <button type="button" class="btn" id="text-italic"><img
                                     src="static/type-italic.svg"></button>
-                            <button type="checkbox" class="btn" data-bs-toggle="button" id="text-underline"><img
+                            <button type="checkbox" class="btn" id="text-underline"><img
                                     src="static/type-underline.svg"></button>
-                            <button type="checkbox" class="btn" data-bs-toggle="button" id="text-strikethrough"><img
+                            <button type="button" class="btn" id="text-strikethrough"><img
                                     src="static/type-strikethrough.svg"></button>
+                            <button type="button" class="btn rect black" id="text-black"></button>
+                            <button type="button" class="btn rect white" id="text-white"></button>
                         </div>
                     </div>
                 </div>

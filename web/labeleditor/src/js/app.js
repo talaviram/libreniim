@@ -113,6 +113,14 @@ const objectAlignEnd = document.getElementById("align-end");
 const objectAlignTop = document.getElementById("align-top");
 const objectAlignBottom = document.getElementById("align-bottom");
 const alignInspector = document.getElementById("align-inspector");
+const toFrontButton = document.getElementById("to-front");
+const toBackButton = document.getElementById("to-back");
+const zInspector = document.getElementById("z-inspector");
+const objectColorInspector = document.getElementById("object-color-inspector");
+const objectFillWhiteButton = document.getElementById("fill-white");
+const objectFillBlackButton = document.getElementById("fill-black");
+const objectStrokeWhiteButton = document.getElementById("stroke-white");
+const objectStrokeBlackButton = document.getElementById("stroke-black");
 
 const qrInspector = document.getElementById("qr-inspector");
 const qrSelectedText = document.getElementById("qr-text");
@@ -121,6 +129,8 @@ const textBold = document.getElementById("text-bold");
 const textItalic = document.getElementById("text-italic");
 const textUnderline = document.getElementById("text-underline");
 const textStrikethrough = document.getElementById("text-strikethrough");
+const textBlack = document.getElementById("text-black");
+const textWhite = document.getElementById("text-white");
 
 const fontFamilySelect = document.getElementById("font-family");
 const fontSize = document.getElementById("font-size");
@@ -131,12 +141,17 @@ function handleSelectionChanged(options) {
   let isIText = false;
   let isQR = false;
   let canAlign = false;
+  let isSimpleObject = false;
   let objs;
   if (options.selected) {
     objs = options.selected;
     isIText = objs[0] instanceof fabric.IText;
     isQR = objs[0].qrText != null && objs[0].qrText != undefined;
-    canAlign = objs.length === 1;
+    if (objs.length === 1) {
+      canAlign = true;
+      const type = objs[0].type;
+      isSimpleObject = type === 'rect' || type === 'circle' || type === 'triangle' || type === 'line';
+    }
   }
   textInspector.hidden = !isIText;
   if (isIText) {
@@ -148,6 +163,12 @@ function handleSelectionChanged(options) {
     qrText = objs[0].qrText;
   }
   alignInspector.hidden = !canAlign;
+  zInspector.hidden = !canAlign;
+  objectColorInspector.hidden = !isSimpleObject;
+  if (!isSimpleObject)
+    objectColorInspector.classList.add("hidden");
+  else
+    objectColorInspector.classList.remove("hidden");
 }
 
 function toggleClass(button, isActive) {
@@ -252,6 +273,16 @@ function init() {
       setTextInspectorIfNeeded(obj);
   });
 
+  textBlack.addEventListener("click", () => {
+    canvas.getActiveObject().set('fill', 'black');
+    canvas.renderAll();
+  });
+
+  textWhite.addEventListener("click", () => {
+    canvas.getActiveObject().set('fill', 'white');
+    canvas.renderAll();
+  });
+
   // font controls
   fontFamilySelect.addEventListener("change", () => {
     if ((obj = setIfIText("fontFamily", fontFamilySelect.value)))
@@ -288,6 +319,34 @@ function init() {
   objectAlignBottom.addEventListener("click", () => {
     alignObjectsOnCanvas(canvas.getActiveObjects(), "bottom");
   });
+
+  toFrontButton.addEventListener("click", () => {
+    canvas.bringObjectToFront(canvas.getActiveObject());
+    canvas.renderAll();
+  });
+  toBackButton.addEventListener("click", () => {
+    canvas.sendObjectToBack(canvas.getActiveObject());
+    canvas.renderAll();
+  });
+
+  objectStrokeBlackButton.addEventListener("click", () => {
+    canvas.getActiveObject().set('stroke', 'black');
+    canvas.renderAll();
+  });
+  objectStrokeWhiteButton.addEventListener("click", () => {
+    canvas.getActiveObject().set('stroke', 'white');
+    canvas.renderAll();
+  });
+
+  objectFillBlackButton.addEventListener("click", () => {
+    canvas.getActiveObject().set('fill', 'black');
+    canvas.renderAll();
+  });
+  objectFillWhiteButton.addEventListener("click", () => {
+    canvas.getActiveObject().set('fill', 'white');
+    canvas.renderAll();
+  });
+
   qrSelectedText.addEventListener("input", () => {
     if (currentQRObject === null) return;
     const originalObject = currentQRObject;
