@@ -33,11 +33,8 @@ struct WebView: UIViewRepresentable {
           return 1;
         }
         function exportCanvas() {
-            document.getElementById('deselectButton').click();
-            var canvas = document.getElementById('labelCanvas');
-            const canvasScale = backingScale(canvas.getContext("2d"));
-            var dataURL = canvas.toDataURL('image/png');
-            window.webkit.messageHandlers.imageHandler.postMessage({"dataURL": dataURL, "scale": canvasScale});
+            var dataURL = canvas.toDataURL();
+            window.webkit.messageHandlers.imageHandler.postMessage({"dataURL": dataURL, "scale": 1.0});
         }
         """
         webView.configuration.userContentController.addUserScript(WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false))
