@@ -11,7 +11,6 @@ struct WebView: UIViewRepresentable {
         let script = """
         exportCanvas();
         """
-        print(WebView.shared.view?.configuration.userContentController.userScripts.count)
         WebView.shared.view!.evaluateJavaScript(script, completionHandler: {
             _, err in
             print("Javascript Image Export Error", err.debugDescription)
