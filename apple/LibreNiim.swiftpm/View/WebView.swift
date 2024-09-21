@@ -53,7 +53,6 @@ struct WebView: UIViewRepresentable {
 
         init(_ parent: WebView) {
             self.parent = parent
-//            self.onImageCaptured = onImageCaptured
         }
 
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
