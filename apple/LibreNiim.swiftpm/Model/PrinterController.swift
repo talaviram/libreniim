@@ -63,7 +63,6 @@ class PrinterController: ObservableObject {
     }
     let printImage = verticalPrint ? scaledImage.roatatedBy90() : scaledImage
     let imageAsPackets = encodeImageToPackets(image: printImage!.asBitmap())
-      return;
     guard printer != nil, imageAsPackets.count > 1, quantity > 0 else {
       assertionFailure("Image encoding failed?")
       return
