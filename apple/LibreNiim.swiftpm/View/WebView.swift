@@ -20,8 +20,13 @@ struct WebView: UIViewRepresentable {
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
         webView.navigationDelegate = context.coordinator
-        webView.loadURL("http://127.0.0.1:1234")
-        WebView.shared.view = webView
+#if DEBUG
+        if #available(macCatalyst 16.4, iOS 16.4, *) {
+            webView.isInspectable = true
+        }
+#endif
+// When developing and running from parcel server
+//        webView.loadURL("http://127.0.0.1:1234")
         let script = """
         function backingScale(context) {
           if ('devicePixelRatio' in window) {
@@ -36,7 +41,13 @@ struct WebView: UIViewRepresentable {
             window.webkit.messageHandlers.imageHandler.postMessage({"dataURL": dataURL, "scale": 1.0});
         }
         """
+        webView.configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         webView.configuration.userContentController.addUserScript(WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false))
+        // load normal files from /web
+        let indexPath = Bundle.main.path(forResource: "index", ofType: "html")
+        let indexUrl = URL(fileURLWithPath: indexPath!)
+        webView.loadFileURL(indexUrl, allowingReadAccessTo: indexUrl)
+        WebView.shared.view = webView
         return webView
     }
 
