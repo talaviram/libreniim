@@ -4,8 +4,8 @@
   "description": "Label Printers Editor",
   "source": "src/index.html",
   "scripts": {
-    "start": "parcel serve src/index.html --public-url / --dist-dir dist",
-    "build": "parcel build"
+    "start": "parcel serve src/index.html --public-url ./ --dist-dir dist",
+    "build": "parcel build --public-url ./ --dist-dir dist"
   },
   "author": "Tal Aviram",
   "license": "MIT",
