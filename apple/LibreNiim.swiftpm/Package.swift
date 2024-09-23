@@ -49,6 +49,9 @@ let package = Package(
         .product(name: "AsyncBluetooth", package: "AsyncBluetooth")
       ],
       path: ".",
+      resources: [
+        .process("Resources")
+      ],
       swiftSettings: [
         .enableUpcomingFeature("BareSlashRegexLiterals")
       ]

@@ -461,7 +461,7 @@ const defaultFontFamilies = [
 
 // Populate font select elements
 function populateFontFamilySelect() {
-  didSelectFirst = false;
+  let didSelectFirst = false;
   for (const font of defaultFontFamilies) {
     const option = document.createElement("option");
     option.value = font;
