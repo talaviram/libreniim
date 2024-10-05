@@ -137,6 +137,7 @@ const fontFamilySelect = document.getElementById("font-family");
 const fontSize = document.getElementById("font-size");
 const fontSizePlus = document.getElementById("font-size-plus");
 const fontSizeMinus = document.getElementById("font-size-minus");
+const iTextEditor = document.getElementById("itext");
 
 function handleSelectionChanged(options) {
   let isIText = false;
@@ -144,8 +145,16 @@ function handleSelectionChanged(options) {
   let canAlign = false;
   let isSimpleObject = false;
   let objs;
+
   if (options.selected) {
+    const selectionColor = "black";
+    canvas.selectionBorderColor = selectionColor;
+    canvas.cornerColorColor = selectionColor;
     objs = options.selected;
+    objs.forEach((obj) => {
+      obj.set({ borderColor: selectionColor, cornerColor: selectionColor });
+      obj.group;
+    });
     isIText = objs[0] instanceof fabric.IText;
     isQR = objs[0].qrText != null && objs[0].qrText != undefined;
     if (objs.length === 1) {
@@ -189,6 +198,7 @@ function setTextInspectorIfNeeded(textItem) {
     let current = fontFamilySelect[option].value;
     fontFamilySelect[option].selected = current === currentFamily;
   }
+  iTextEditor.value = canvas.getActiveObject().get("text");
   toggleClass(textBold, textItem.get("fontWeight") === "bold");
   toggleClass(textItalic, textItem.get("fontStyle") === "italic");
   toggleClass(textUnderline, textItem.get("underline"));
@@ -304,6 +314,12 @@ function init() {
     const decValue = Math.max(parseInt(fontSize.value) - 1, MIN_FONT_SIZE);
     setIfIText("fontSize", decValue);
     fontSize.value = decValue;
+  });
+  iTextEditor.addEventListener("input", () => {
+    const obj = canvas.getActiveObject();
+    if (obj.get("type") != "i-text") return;
+    obj.set("text", iTextEditor.value);
+    canvas.renderAll();
   });
 
   objectAlignTop.addEventListener("click", () => {

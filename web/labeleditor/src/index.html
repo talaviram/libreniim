@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Label Editor</title>
     <link rel="stylesheet" href="scss/styles.scss">
     <script>
@@ -13,18 +13,21 @@
     <script src="js/qrcode.min.js"></script>
 </head>
 
-<body>
+<body class="top-view">
     <div class="container">
         <div id="canvas_area" class="main">
             <div class="canvas-container user-intractable">
-                <canvas style="border:2px solid black" id="labelCanvas" width="240" height="96"></canvas>
+                <canvas style="border:2px solid gray" id="labelCanvas" width="240" height="96"></canvas>
             </div>
             <div id="inspectors">
                 <div>
                     <div id="object-insepctor">
-                        <div class="container with-margin">
-                            <button type="button" class="btn" id="selectAllButton">Select All</button>
+                        <div class="container">
                             <ul>
+                                <li class="nav-item">
+                                    <button type="button" class="btn" id="selectAllButton"><img
+                                            src="static/border-outer.svg"></button>
+                                </li>
                                 <li class="nav-item">
                                     <button type="button" class="btn" id="addTextButton"><img
                                             src="static/textarea-t.svg"></button>
@@ -51,56 +54,52 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="sides">
-                            <div class="container">
-                                <div id="align-inspector" class="align-items: stretch;" hidden>
-                                    <button type="button" class="btn" id="align-start"><img
-                                            src="static/align-start.svg"></button>
-                                    <button type="button" class="btn" id="align-center"><img
-                                            src="static/align-center.svg"></button>
-                                    <button type="button" class="btn" id="align-end"><img
-                                            src="static/align-end.svg"></button>
-                                    <button type="button" class="btn" id="align-top"><img
-                                            src="static/align-top.svg"></button>
-                                    <button type="button" class="btn" id="align-bottom"><img
-                                            src="static/align-bottom.svg"></button>
-                                </div>
-                                <div id="z-inspector" class="align-items: stretch;" hidden>
-                                    <button type="button" class="btn" id="to-front"><img
-                                            src="static/front.svg"></button>
-                                    <button type="button" class="btn" id="to-back"><img src="static/back.svg"></button>
-                                </div>
+                        <div class="container-to-end">
+                            <div id="align-inspector" class="align-items: stretch;" hidden>
+                                <button type="button" class="btn" id="align-start"><img
+                                        src="static/align-start.svg"></button>
+                                <button type="button" class="btn" id="align-center"><img
+                                        src="static/align-center.svg"></button>
+                                <button type="button" class="btn" id="align-end"><img
+                                        src="static/align-end.svg"></button>
+                                <button type="button" class="btn" id="align-top"><img
+                                        src="static/align-top.svg"></button>
+                                <button type="button" class="btn" id="align-bottom"><img
+                                        src="static/align-bottom.svg"></button>
                             </div>
-                            <div>
-                                <button type="button" class="btn" style="align-self: flex-end;"
-                                    id="deleteSelectedButton"><img src="static/trash.svg"></button>
+                            <div id="z-inspector" class="align-items: stretch;" hidden>
+                                <button type="button" class="btn" id="to-front"><img src="static/front.svg"></button>
+                                <button type="button" class="btn" id="to-back"><img src="static/back.svg"></button>
                             </div>
+                            <button type="button" class="btn" style="align-self: flex-end;"
+                                id="deleteSelectedButton"><img src="static/trash.svg"></button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div style="width: 100%;">
-                <div id="object-color-inspector" class="fill-and-stroke-container hidden">
-                    <p>Stroke </p>
-                    <button type="button" class="circle black" id="stroke-black"></button>
-                    <button type="button" class="circle white" id="stroke-white"></button>
-                    <p>Fill </p>
-                    <button type="button" class="circle black" id="fill-black"></button>
-                    <button type="button" class="circle white" id="fill-white"></button>
+                <div style="width: 100%;">
+                    <div id="object-color-inspector" class="fill-and-stroke-container hidden">
+                        <p>Stroke </p>
+                        <button type="button" class="circle black" id="stroke-black"></button>
+                        <button type="button" class="circle white" id="stroke-white"></button>
+                        <p>Fill </p>
+                        <button type="button" class="circle black" id="fill-black"></button>
+                        <button type="button" class="circle white" id="fill-white"></button>
+                    </div>
                 </div>
             </div>
             <div id="qr-inspector" hidden>
-                <input type="text" id="qr-text" placeholder="Enter QR text here..." class="form-control" id="qr_text">
+                <input type="text" id="qr-text" class="text-input" placeholder="Enter QR text here..."
+                    class="form-control">
             </div>
-            <div class="container with-margin">
+            <div class="container">
                 <div id="text-inspector" hidden>
                     <div>
-                        <div class="container with-margin">
-                            <div class="form-group p-2">
-                                <select class="form-control" id="font-family" />
+                        <div class="container-to-end">
+                            <div class="centered-area">
+                                <select id="font-family" style="min-width: 190px;" />
                             </div>
-                            <div class="form-group p-2">
-                                <select class="form-control" id="font-size" />
+                            <div class="centered-area">
+                                <select id="font-size" />
                             </div>
                             <button type="button" class="btn" id="font-size-plus"><img
                                     src="static/plus-lg.svg"></button>
@@ -108,7 +107,7 @@
                                     src="static/dash-lg.svg"></button>
 
                         </div>
-                        <div style="align-content: space-between;">
+                        <div>
                             <button type="button" class="btn" id="text-current-time"><img
                                     src="static/clock.svg"></button>
                             <button type="button" class="btn" id="text-current-date"><img
@@ -120,8 +119,13 @@
                                     src="static/type-underline.svg"></button>
                             <button type="button" class="btn" id="text-strikethrough"><img
                                     src="static/type-strikethrough.svg"></button>
-                            <button type="button" class="btn circle black" id="text-black"></button>
-                            <button type="button" class="btn circle white" id="text-white"></button>
+                            <div class="fill-and-stroke-container">
+                                <p>Text Color</p>
+                                <button type="button" class="btn circle black" id="text-black"></button>
+                                <button type="button" class="btn circle white" id="text-white"></button>
+                            </div>
+                            </button>
+                            <input type="text" class="text-input" placeholder="Enter text here.." id="itext">
                         </div>
                     </div>
                 </div>

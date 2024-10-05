@@ -15,32 +15,90 @@ user-intractable {
   -webkit-user-select: auto;
 }
 
-.btn {
-  background-color: transparent;
-  border: none;
-  font-size: 1em;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+.top-view {
+  width: 100%;
+  height: 100%;
+}
 
-  &:active,
-  &.active {
-    width: fit-content;
-    background-color: white;
-    filter: invert(75%);
-    border-radius: 8px;
+body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .top-view {
+    background-color: black;
+  }
+
+  canvas {
+    filter: invert(100%);
+  }
+
+  select {
+    background-color: #14141405;
+    color: white;
+  }
+
+  .fill-and-stroke-container {
+    color: white;
+  }
+
+  .btn {
+    img {
+      filter: invert(100%);
+    }
   }
 }
 
+.btn {
+  min-width: 50px;
+  display: block;
+  padding-top: 100%;
+  background-color: transparent;
+  border: none;
+  height: 5em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 12px;
+  border-radius: 8px;
+
+  &:active,
+  &.active {
+    background-color: white;
+    filter: invert(75%);
+  }
+}
+
+.text-input {
+  padding: 8px;
+  display: block;
+  width: 90%;
+  border: 1px solid #ddd;
+  border-radius: 35px;
+  font-size: 1em;
+  margin: 0.5em;
+}
+
+
+.btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .circle {
-  height: 20px;
-  width: 20px;
-  padding: 2px;
-  border-radius: 50%;
+  height: 4em;
+  width: 4em;
+  border-radius: 100%;
   border: 1px solid black;
   background-color: white;
+  margin: 5px;
 
   &.black {
+    border: 1px solid white;
     background-color: black;
   }
 
@@ -55,30 +113,41 @@ user-intractable {
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: fit-content;
+  width: 100%;
 }
 
 .canvas-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
 }
 
 .container {
-  width: auto;
-  height: 100%;
-  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.container-to-end {
+  min-width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  gap: 5px;
+  margin: 5px 0 0 0;
+}
+
+.centered-area {
+  place-self: stretch center;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .fill-and-stroke-container {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
   padding-left: 10px;
-  height: 100%;
   display: flex;
   flex-flow: row;
   justify-content: flex-start;
@@ -86,21 +155,8 @@ user-intractable {
   gap: 5px;
 }
 
-.fill-and-stroke-container.hidden {
+.hidden {
   display: none;
-}
-
-.with-margin {
-  margin: 5px 5px;
-}
-
-.sides {
-  width: auto;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 5px 5px;
 }
 
 ul {
@@ -112,6 +168,7 @@ ul {
 
 li {
   float: left;
+  margin: 0 5px 0 5px;
 }
 
 li a {
