@@ -4,6 +4,7 @@ window.canvas = canvas;
 
 const MIN_FONT_SIZE = 16;
 const MAX_FONT_SIZE = 100;
+const DEFAULT_FONT_SIZE = 24;
 const DEFAULT_OBJECT_SIZE = 25;
 const ITEM_INSERT_OFFSET = 10;
 
@@ -36,7 +37,7 @@ function makeNewObject(objectType) {
         left: pos.left,
         top: pos.top,
       });
-      object.fontSize = 24;
+      object.fontSize = DEFAULT_FONT_SIZE;
       break;
     case "Circle":
       object = new fabric.Circle({
