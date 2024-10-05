@@ -413,6 +413,14 @@ function init() {
   canvas.on("selection:created", handleSelectionChanged);
   canvas.on("selection:cleared", handleSelectionChanged);
   canvas.on("selection:updated", handleSelectionChanged);
+
+  const object = new fabric.IText("Label", {
+    left: 0,
+    top: 0,
+    fontSize: 50,
+  });
+  canvas.add(object);
+  alignObject(object, "center");
 }
 
 function setIfIText(prop, value) {
