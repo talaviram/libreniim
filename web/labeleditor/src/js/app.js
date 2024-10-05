@@ -194,7 +194,7 @@ function toggleClass(button, isActive) {
 }
 
 function setTextInspectorIfNeeded(textItem) {
-  for (option in fontFamilySelect.children) {
+  for (let option in fontFamilySelect.children) {
     const currentFamily = textItem.get("fontFamily");
     let current = fontFamilySelect[option].value;
     fontFamilySelect[option].selected = current === currentFamily;
