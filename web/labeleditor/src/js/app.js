@@ -194,10 +194,10 @@ function toggleClass(button, isActive) {
 }
 
 function setTextInspectorIfNeeded(textItem) {
-  for (let option in fontFamilySelect.children) {
+  for (let option of fontFamilySelect.children) {
     const currentFamily = textItem.get("fontFamily");
-    let current = fontFamilySelect[option].value;
-    fontFamilySelect[option].selected = current === currentFamily;
+    let current = option.value;
+    option.selected = current === currentFamily;
   }
   iTextEditor.value = canvas.getActiveObject().get("text");
   toggleClass(textBold, textItem.get("fontWeight") === "bold");
