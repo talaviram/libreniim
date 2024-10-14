@@ -1,4 +1,5 @@
 import * as fabric from "fabric";
+import QRCode from "qrcode-svg";
 export const canvas = new fabric.Canvas("labelCanvas");
 window.canvas = canvas;
 
@@ -174,9 +175,6 @@ function handleSelectionChanged(options) {
   }
   qrInspector.hidden = !isQR;
   currentQRObject = isQR ? objs[0] : null;
-  if (isQR) {
-    qrText = objs[0].qrText;
-  }
   alignInspector.hidden = !canAlign;
   zInspector.hidden = !canAlign;
   objectColorInspector.hidden = !isSimpleObject;
@@ -217,19 +215,18 @@ function appendTextToCurrentIText(text) {
 }
 
 function createQR() {
-  const qrText = qrSelectedText.value;
-  const generatedQR = new QRCode({
-    msg: qrText,
-    dim: 128,
-    pad: 4,
-    mtx: -1,
+  const qrText = qrSelectedText.value.length > 0 ? qrSelectedText.value : "QR Code";
+  var generatedQR = new QRCode({
+    content: qrText,
+    padding: 4,
+    width: 256,
+    height: 256,
+    color: "#000000",
+    background: "#ffffff",
     ecl: "M",
-    ecb: 1,
-    pal: ["#000", "#fff"],
-    vrb: 0,
   });
-  makeSymbol("<svg>" + generatedQR.innerHTML + "/svg>", (obj) => {
-    obj.qrText = qrText;
+  makeSymbol(generatedQR.svg(), (obj) => {
+    obj.set("qrText", qrText);
     obj.scaleToWidth(DEFAULT_OBJECT_SIZE * 2.5);
     canvas.renderAll();
     handleSelectionChanged({ selected: canvas.getActiveObjects() });
@@ -369,18 +366,17 @@ function init() {
   qrSelectedText.addEventListener("input", () => {
     if (currentQRObject === null) return;
     const originalObject = currentQRObject;
-    const qrText = qrSelectedText.value;
-    const generatedQR = new QRCode({
-      msg: qrText,
-      dim: 512,
-      pad: 4,
-      mtx: -1,
+    const qrText = qrSelectedText.value.length > 0 ? qrSelectedText.value : "QR Code";
+    var generatedQR = new QRCode({
+      content: qrText,
+      padding: 4,
+      width: 256,
+      height: 256,
+      color: "#000000",
+      background: "#ffffff",
       ecl: "M",
-      ecb: 1,
-      pal: ["#000", "#fff"],
-      vrb: 0,
     });
-    makeSymbol("<svg>" + generatedQR.innerHTML + "/svg>", (obj) => {
+    makeSymbol(generatedQR.svg(), (obj) => {
       obj.qrText = qrText;
       obj.left = originalObject.left;
       obj.top = originalObject.top;
